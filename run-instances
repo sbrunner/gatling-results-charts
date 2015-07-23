@@ -18,7 +18,7 @@ do
     NAME=instances-$NB
     rm -rf ${NAME}*
     _JAVA_OPTIONS="-Dnbuser=30 -Dnbinstance=$NB"
-    gatling -s geomapfish.Rudaz -on zzz
+    gatling -s geomapfish.Rudaz -on ${NAME}
     mv ${NAME}-* ${NAME}
 
     date >> log
