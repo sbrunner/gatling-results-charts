@@ -1,0 +1,29 @@
+#! /bin/bash
+
+for NB in 1 2 4 8 15 20 25 30 25 40
+do
+    echo Start $NB
+
+    echo $NB >> log
+    date >> log
+
+    rm test.conf
+    for N in $(seq 0 $((NB-1)))
+    do
+        echo "Include /var/www/mapfish-geoportal/private/${N}/geoportal/apache/*.conf" >> test.conf
+    done
+    scp test.conf mapfish-geoportal-demo.gis.internal:/var/www/mapfish-geoportal/conf
+    ssh mapfish-geoportal-demo.gis.internal "sudo /usr/sbin/apache2ctl graceful"
+
+    NAME=instances-$NB
+    rm -rf ${NAME}*
+    _JAVA_OPTIONS="-Dnbuser=30 -Dnbinstance=$NB"
+    gatling -s geomapfish.Rudaz -on zzz
+    mv ${NAME}-* ${NAME}
+
+    date >> log
+    echo End $NB
+
+    sleep $((5*60))
+done
+rm test.conf
