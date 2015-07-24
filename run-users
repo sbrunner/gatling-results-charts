@@ -5,7 +5,8 @@ do
     echo Start $NB
 
     echo $NB >> log
-    date >> log
+    date +%Y%m%d >> log
+    date +%H:%M >> log
 
     echo "Include /var/www/mapfish-geoportal/private/0/geoportal/apache/*.conf" > test.conf
     scp test.conf mapfish-geoportal-demo.gis.internal:/var/www/mapfish-geoportal/conf
@@ -17,7 +18,7 @@ do
     gatling -s geomapfish.Rudaz -on ${NAME}
     mv ${NAME}-* ${NAME}
 
-    date >> log
+    date +%H:%M >> log
     echo End $NB
 
     sleep $((5*60))

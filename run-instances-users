@@ -5,7 +5,8 @@ do
     echo Start $NB
 
     echo $NB >> log
-    date >> log
+    date +%Y%m%d >> log
+    date +%H:%M >> log
 
     rm test.conf
     for N in $(seq 0 $((NB-1)))
@@ -21,7 +22,7 @@ do
     gatling -s geomapfish.Rudaz -on ${NAME}
     mv ${NAME}-* ${NAME}
 
-    date >> log
+    date +%H:%M >> log
     echo End $NB
 
     sleep $((5*60))
