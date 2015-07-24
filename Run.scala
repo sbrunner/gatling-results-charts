@@ -9,7 +9,7 @@ import io.gatling.jdbc.Predef._
 import java.lang.Math
 
 
-class Rudaz extends Simulation {
+class Run extends Simulation {
     val random = new util.Random
 
     val host = "mapfish-geoportal.demo-camptocamp.com"
@@ -24,11 +24,19 @@ class Rudaz extends Simulation {
     val group = theme
     val lang = "fr"
 
-    val nbUser = 30
+    val nbUser = Integer.getInteger("nbuser").intValue
+    val nbInstance = Integer.getInteger("nbinstance").intValue
+
     val spaceTime = 2
     val basicTime = 40.0
-    val nbTimes = Math.ceil(nbUser * spaceTime / basicTime).toInt
-//    val nbTimes = 1
+//    val nbTimes = Math.ceil(nbUser * spaceTime / basicTime).toInt * 10
+    val nbTimes = Integer.getInteger("nbtimes", 20).intValue
+
+    System.out.println("Get config:")
+    System.out.println(s"nbUser: $nbUser")
+    System.out.println(s"nbInstance: $nbInstance")
+    System.out.println(s"nbTimes: nbTimes")
+
     val rampTime = nbUser * spaceTime
     val fts_choises = ('a' to 'z') ++ ('0' to '9')
 
@@ -45,8 +53,7 @@ class Rudaz extends Simulation {
         )
     }
 
-//    val instance_ids = (0 to 39).map { n => "%d".format(n) }
-    val instance_ids = (0 to 0).map { n => "%d".format(n) }
+    val instance_ids = (0 to nbInstance - 1).map { n => "%d".format(n) }
     val resolutions = Array(0.05, 0.1, 0.25, 0.5, 1, 2, 5, 10, 20, 50, 100, 200)
     val layers = Map(
         "0" -> Array("at_pga", "at_dsb", "at_sct_proteaux", "at_zone_proteaux", "cad_batss", "cad_odl", "cad_baths", "cad_adr", "ep_hydrante", "ep_captage", "ep_reservoir", "ep_station_pompage", "ep_station_traitement", "ep_vanne", "ad_va_rue_tr", "mo_par", "eu_ch", "eu_coll", "ep_conduite", "mo_agr", "ep_cond", "eu_ch_label", "at_ra_pt", "at_ra_surf", "el_luminaire", "el_armoire", "el_cable", "el_tube", "eu_evac_par", "at_pga_ppa", "at_surf_assolement", "dn_dissolution_gypse", "dn_glissement_surf", "dn_glissement_prof", "at_camac_en_cours", "at_camac_anciennes", "mo_label", "ep_regulation_pression", "tp_bateau_s", "tp_bus_s", "tp_bus_l", "tp_train_s", "tp_train_l", "at_lim_constr", "en_cit", "en_cit_gest", "mo_ddp", "mo_baths", "mo_batss", "mo_label_automatique", "mo_cs", "ad_entree_rcb", "en_reserve_faune", "en_imns_s", "en_imns_l", "ep_vanne_parcelle", "ep_vanne_batiment", "ep_conduite_zone_pression", "ep_vanne_raccords"),
