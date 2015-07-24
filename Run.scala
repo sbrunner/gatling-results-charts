@@ -35,7 +35,7 @@ class Run extends Simulation {
     System.out.println("Get config:")
     System.out.println(s"nbUser: $nbUser")
     System.out.println(s"nbInstance: $nbInstance")
-    System.out.println(s"nbTimes: nbTimes")
+    System.out.println(s"nbTimes: $nbTimes")
 
     val rampTime = nbUser * spaceTime
     val fts_choises = ('a' to 'z') ++ ('0' to '9')
