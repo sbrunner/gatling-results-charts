@@ -1,6 +1,6 @@
 #! /bin/bash
 
-for NB in 1 2 4 8 15 20 25 30 25 40
+for NB in 1 2 4 8 15 20 25 30 35 40
 do
     echo Start $NB
 
